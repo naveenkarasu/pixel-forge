@@ -1,0 +1,20 @@
+name: acceptance
+
+# The official gate: every push / PR runs the acceptance suite. A green check is
+# what DevAscent reads (via `gh`) to mark a ticket Done and unlock the next.
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run acceptance suite
+        run: pytest -q
