@@ -2,5 +2,5 @@
 
 
 def normalize_email(email):
-    """Lower-case and strip an email so logins are case-insensitive."""
-    return email.strip().lower()
+    # BUG (PXF-220): no normalization, so logins are case-sensitive. TODO: lower + strip.
+    return email
