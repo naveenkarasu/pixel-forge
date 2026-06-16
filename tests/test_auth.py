@@ -1,13 +1,9 @@
 """Visible tests for the auth/accounts helpers."""
 
+from pixelforge.core.accounts import can, is_locked, session_valid
+from pixelforge.core.audit import mask_email
 from pixelforge.core.email import normalize_email
-from pixelforge.core.security import (
-    can,
-    is_locked,
-    is_strong,
-    mask_email,
-    session_valid,
-)
+from pixelforge.core.passwords import is_strong
 from pixelforge.core.validators import is_valid_email
 
 

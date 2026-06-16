@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from pixelforge.core.email import normalize_email
-from pixelforge.core.security import is_strong
+from pixelforge.core.passwords import is_strong
 from pixelforge.core.validators import is_valid_email
 
 router = APIRouter(prefix="/auth", tags=["auth"])
