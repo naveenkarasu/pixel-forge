@@ -1,8 +1,12 @@
 """Input validators for signup / assets."""
 
+import re
+
+# Accept plus-tagged local parts (team+billing@studio.com) and normal addresses;
+# reject obviously malformed ones (missing local part, missing domain, no TLD).
+_EMAIL = re.compile(r"^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$")
+
 
 def is_valid_email(email):
-    # BUG (PXF-202): too loose — accepts anything containing '@', so `bad@` and
-    # `@studio.com` slip through. TODO: require a local part, a domain, and a TLD
-    # (while still allowing plus-tags).
-    return "@" in email
+    """Return True if ``email`` is a plausibly valid address (plus-tags allowed)."""
+    return bool(_EMAIL.match(email.strip()))
