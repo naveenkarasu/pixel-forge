@@ -2,8 +2,11 @@
 
 
 def paginate(items, page, size):
-    """Return the slice of ``items`` on the 1-indexed ``page`` of ``size`` rows."""
-    # BUG (PXF-201): page 1 starts at index `size` instead of 0, so every page
-    # loses its first item. TODO: fix the start index for 1-indexed pages.
-    start = page * size
+    """Return the slice of ``items`` on the 1-indexed ``page`` of ``size`` rows.
+
+    Page 1 starts at index 0 (not ``size``); the last page may be partial.
+    """
+    if page < 1 or size < 1:
+        raise ValueError("page and size must be >= 1")
+    start = (page - 1) * size
     return items[start:start + size]
