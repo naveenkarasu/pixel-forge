@@ -3,20 +3,20 @@
 _ROLE_ACTIONS = {
     "admin": {"read", "upload", "delete"},
     "editor": {"read", "upload"},
-    "viewer": {"read", "delete"},  # BUG (PXF-224): viewers must NOT be able to delete.
+    "viewer": {"read"},
 }
 
 
 def session_valid(now, expires_at):
-    # BUG (PXF-222): expired sessions are still accepted at the expiry instant.
-    # TODO: a session is valid only strictly before it expires.
-    return now <= expires_at
+    """A session is valid only strictly before it expires."""
+    return now < expires_at
 
 
 def is_locked(failed_attempts, limit):
-    # BUG (PXF-223): lockout triggers one attempt too late. TODO: lock at the limit (>=).
-    return failed_attempts > limit
+    """An account locks once failed attempts reach the limit (>=, not >)."""
+    return failed_attempts >= limit
 
 
 def can(role, action):
+    """RBAC check: viewers may read but never upload/delete."""
     return action in _ROLE_ACTIONS.get(role, set())
